@@ -11,27 +11,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
  
 public class CSVReader {
+
+  public ArrayList<String> getArrayList(String url, int field) throws IOException {
  
-  public static void main(String[] args) {
- 
-	CSVReader obj = new CSVReader();
-	
-	try {
-		obj.run();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
- 
-  }
- 
-  public void run() throws IOException {
- 
-	URL stockURL = new URL("http://england.proximity.on.ca/chris/outbound/lb/lb_dep_rpm.csv");
+	URL stockURL = new URL(url);
 	
 	BufferedReader br = new BufferedReader(new InputStreamReader(stockURL.openStream()));
 
@@ -39,7 +29,9 @@ public class CSVReader {
 	//BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
- 
+	ArrayList<String> list = new ArrayList<String>();
+
+ /*
 	try {
  
 		Map<String, String> maps = new HashMap<String, String>();
@@ -61,7 +53,18 @@ public class CSVReader {
 				+ entry.getValue() + "]");
  
 		}
+ */
+	try{
+		
+		while ((line = br.readLine()) != null) {
+			 
+			// use comma as separator
+			String[] string = line.split(cvsSplitBy);
  
+			list.add(string[field]);
+ 
+		}
+		
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
 	} catch (IOException e) {
@@ -77,6 +80,53 @@ public class CSVReader {
 	}
  
 	System.out.println("Done");
+	return list;
   }
+  public TreeMap<String,String> getMap(String url) throws IOException {
+	  
+		URL stockURL = new URL(url);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+
+		//String csvFile = "/Users/mkyong/Downloads/GeoIPCountryWhois.csv";
+		//BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		TreeMap<String,String> map = new TreeMap<String,String>();
+		
+		while ((line = br.readLine()) != null) {
+			 
+			// use comma as separator
+			String[] string = line.split(cvsSplitBy);
  
+			map.put(string[0], string[1]);
+ 
+		}
+		return map;
+  }
+  
+  public TreeMap<String,String> getMapSet(String url) throws IOException {
+	  
+		URL stockURL = new URL(url);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+
+		String line = "";
+		String cvsSplitBy = ",";
+		TreeMap<String,String> map = new TreeMap<String,String>();
+		TreeSet<String> set = new TreeSet<String>();
+		//Arra
+		
+		while ((line = br.readLine()) != null) {
+			 
+			// use comma as separator
+			String[] string = line.split(cvsSplitBy);
+ 
+			map.put(string[0], string[1]);
+ 
+		}
+		return map;
+  }
+  
+  
 }
