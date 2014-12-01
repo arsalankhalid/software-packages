@@ -148,7 +148,7 @@ public class Graph {
 	// This method prints the edges from vertex1 to vertex2
 	// it must first check if the vertex's exist and if they contain edges
 	// note that only the first edge that is found is printed
-	
+
 	public void printEdges(String vertex1, String vertex2) {
 		// create generic collection of vertexes and get their values
 		Collection<TreeSet<String>> vertexValues = allVertices.values();
@@ -197,7 +197,6 @@ public class Graph {
 					System.out.print("The path of length " + pathLength
 							+ " from '" + vertex1 + "' and '" + vertex2
 							+ "' has not been found\n");
-				return;
 			}
 		}
 	}
