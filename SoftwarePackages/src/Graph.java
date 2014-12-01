@@ -4,7 +4,7 @@
 //Software Packages - Graph Class
 
 /*
- Graph class holds and manages multiple vertices and edges between them. 
+ Graph class holds and manages multiple vertices and edges 
  The dependencies of vertices are directional, multi-directional however is not
  being used in this use case. 
  Please note that all vertices have been broken into seperate sets.
@@ -30,18 +30,20 @@ public class Graph {
 	 * addEdge() method gets the names of the desired vertex and the vertex to
 	 * link to through the parameters, then adds both of those vertices to the
 	 * list of known vertices (if they haven't been added before), and adds the
-	 * edge between them.
+	 * edge from the rootVertex to vertexToDependOn
 	 */
+
 	public void addEdge(String rootVertex, String vertexToDependOn) {
 		// check if the root vertex contains an edge
 		if (allVertices.containsKey(rootVertex)) {
-			// look for an edge between root vertex and the depending vertex
+			// look for an edge with root vertex and the depending vertex
 			if (isEdge(rootVertex, vertexToDependOn)) {
-				System.out.println("~~~Issue: " + rootVertex + " --> "
-						+ vertexToDependOn + ". Edge already exists~~~");
+				//for debuging
+				//System.out.println("~~~Issue: " + rootVertex + " --> "
+				//		+ vertexToDependOn + ". Edge already exists~~~");
 			}
 			// if vertex does exists, add the vertexToDependOn and place an edge
-			// between the two
+			// from rootVertex to vertexToDependOn
 			else {
 				// get all root vertex's into a set, then add an edge to the
 				// vertex
@@ -54,24 +56,25 @@ public class Graph {
 				allVertices.put(rootVertex, setOfVertices);
 
 				// adds the vertexToDependOn to the allVertices and an edge
-				// between the passed in root vertex and vertexToDependOn
+				// from rootVertex to the verTextoDependOn 
 				createVertexIfNotExists(vertexToDependOn, null);
-				System.out.println(rootVertex + " --> " + vertexToDependOn
-						+ ". edge has been added");
+				//for debugging
+				/*System.out.println(rootVertex + " --> " + vertexToDependOn
+						+ ". edge has been added"); */
 			}
 		} else {
 			// if the root vertex and vertex to depend on don't exist create
-			// them and add an edge between them
+			// them and add an edge from the rootVertex to the vertexToDependOn
 			createVertexIfNotExists(rootVertex, vertexToDependOn);
 			// debug note
-			System.out.println(rootVertex + " ===> " + vertexToDependOn
-					+ ". This edge has been added");
+			/*System.out.println(rootVertex + " ===> " + vertexToDependOn
+					+ ". This edge has been added"); */
 		}
 	}
 
 	/*
 	 * Method gets two vertices and adds both of them to allVertices, then adds
-	 * an edge between them if the vertexToDependOn argument isn't passed as
+	 * an edge from the newVertex to the vertexToDependOn them if the vertexToDependOn argument isn't passed as
 	 * null
 	 */
 
@@ -91,15 +94,14 @@ public class Graph {
 				// recursive call, adds vertexToDependOn to main list
 				createVertexIfNotExists(vertexToDependOn, null);
 			}
-			// place edge between the newVertex and the new created Tree Set
+			// place edge to the newVertex and the new created Tree Set (rootVertex)
 			allVertices.put(newVertex, tempTree);
 		}
 	}
 
-	// Checks for an edge between 2 passed in vertex substrings
-	public boolean isEdge(String rootVertex, String vertexToDependOn) {
-		boolean result = false; // default set to edges between passed in
-								// vertices
+	// Checks for an edge from rootVertex to vertexToDependOn
+	private boolean isEdge(String rootVertex, String vertexToDependOn) {
+		boolean result = false; 		
 
 		// get all vertices with the root vertex name
 		TreeSet<String> verticeSet = allVertices.get(rootVertex);
@@ -143,8 +145,10 @@ public class Graph {
 		return numOfEdges;
 	}
 
-	// This method prints the dependency between two vertices if it exists
+	// This method prints the edges from vertex1 to vertex2
+	// it must first check if the vertex's exist and if they contain edges
 	// note that only the first edge that is found is printed
+	
 	public void printEdges(String vertex1, String vertex2) {
 		// create generic collection of vertexes and get their values
 		Collection<TreeSet<String>> vertexValues = allVertices.values();
@@ -166,18 +170,18 @@ public class Graph {
 					String vertexToDependOn = mainVerticesIter.next()
 							.toString();
 					if (vertexToDependOn.contains(vertex2)) {
-						System.out.println("Found an edge between: " + keyName
-								+ "and" + "--> " + vertexToDependOn);
+						System.out.println("Found an edge from: " + keyName
+								+ "to" + "--> " + vertexToDependOn);
 					}
 				}
 			}
 		}
-		System.out.println("The edge between: " + vertex1 + " and " + vertex2
+		System.out.println("The edge from " + vertex1 + " to " + vertex2
 				+ " was not found");
 	}
 
-	// metho prints path between two vertex's at a given length
-	public void printPath(String vertex1, String vertex2, int pathLength) {
+	// method prints a from vertex1 to vertex2 at a given length
+	public void printMatchingPath(String vertex1, String vertex2, int pathLength) {
 		Iterator allVerticesIter = allVertices.entrySet().iterator();
 		ArrayList<String> pastVertices = new ArrayList();
 		while (allVerticesIter.hasNext()) {
@@ -191,7 +195,7 @@ public class Graph {
 					System.out.println(matchedPath);
 				else
 					System.out.print("The path of length " + pathLength
-							+ " between '" + vertex1 + "' and '" + vertex2
+							+ " from '" + vertex1 + "' and '" + vertex2
 							+ "' has not been found\n");
 				return;
 			}
