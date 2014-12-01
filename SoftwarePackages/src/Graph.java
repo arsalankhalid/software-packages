@@ -276,7 +276,12 @@ public class Graph {
 						desiredVertex, pathCounter, pathLength,
 						previousVertexes);
 				if (matchedPath != "") {
-					String temp = currentVertex.concat("\n  ==>  ");
+					String spaces = "";
+					// add extra indentation for each new length of the path
+					for(int i=0; i<pathCounter; i++){
+						spaces = spaces.concat("  ");
+					}
+					String temp = currentVertex.concat("\n" + spaces + "==>  ");
 					return temp.concat(matchedPath);
 				}
 			}

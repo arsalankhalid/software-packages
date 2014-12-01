@@ -22,7 +22,7 @@ public class CSVReader {
 	 */
 	public CSVReader(){
 		this.csvSplitBy = ",";
-	}
+	} // end constructor
 	
 	/*
 	 * getArrayList method
@@ -49,7 +49,7 @@ public class CSVReader {
 		br.close();
 
 		return list;
-	}
+	} // end getArrayList method
 	
 	/*
 	 * getMap method
@@ -77,7 +77,7 @@ public class CSVReader {
 		br.close();
 
 		return map;
-	}
+	} // end getMap method
 
 	/*
 	 * getTreeSet method
@@ -104,6 +104,6 @@ public class CSVReader {
 		br.close();
 
 		return set;
-	}
+	} // end getTreeSet method
 	
 } // end CSVReader class
