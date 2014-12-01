@@ -187,6 +187,7 @@ public class Graph {
 					if (vertexToDependOn.contains(vertex2)) {
 						System.out.println(keyName
 								+ "to" + "--> " + vertexToDependOn);
+						System.out.println("1");
 					}
 					// if the edge from vertex1 to vertex2 depends on it'self?
 					if (vertexToDependOn.contains(vertex1)) {
