@@ -185,13 +185,13 @@ public class Graph {
 				while (vertexesIter.hasNext()) {
 					String vertexToDependOn = vertexesIter.next().toString();
 					if (vertexToDependOn.contains(vertex2)) {
-						System.out.println("Found an edge from: " + keyName
+						System.out.println(keyName
 								+ "to" + "--> " + vertexToDependOn);
 					}
 					// if the edge from vertex1 to vertex2 depends on it'self?
 					if (vertexToDependOn.contains(vertex1)) {
-						System.out
-								.println("The edge from vertex1 to vertex2 depend on each other");
+						// System.out
+						//		.println("The edge from vertex1 to vertex2 depend on each other");
 					}
 				}
 			}
