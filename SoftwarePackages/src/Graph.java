@@ -10,6 +10,16 @@
  Please note that all vertices have been broken into seperate sets.
  */
 
+//Data-Strucutres USED:
+/********************
+ **	ArrayList
+ **	TreeMap
+ **	TreeSet
+ **	Map + Entry Map
+ **	Collections + Iterators
+ **  Sets 
+ */
+
 import java.util.*;
 
 public class Graph {
@@ -38,9 +48,9 @@ public class Graph {
 		if (allVertices.containsKey(rootVertex)) {
 			// look for an edge with root vertex and the depending vertex
 			if (isEdge(rootVertex, vertexToDependOn)) {
-				//for debuging
-				//System.out.println("~~~Issue: " + rootVertex + " --> "
-				//		+ vertexToDependOn + ". Edge already exists~~~");
+				// for debuging
+				// System.out.println("~~~Issue: " + rootVertex + " --> "
+				// + vertexToDependOn + ". Edge already exists~~~");
 			}
 			// if vertex does exists, add the vertexToDependOn and place an edge
 			// from rootVertex to vertexToDependOn
@@ -56,30 +66,33 @@ public class Graph {
 				allVertices.put(rootVertex, setOfVertices);
 
 				// adds the vertexToDependOn to the allVertices and an edge
-				// from rootVertex to the verTextoDependOn 
-				createVertexIfNotExists(vertexToDependOn, null);
-				//for debugging
-				/*System.out.println(rootVertex + " --> " + vertexToDependOn
-						+ ". edge has been added"); */
+				// from rootVertex to the verTextoDependOn
+				createVertexAndEdges(vertexToDependOn, null);
+				// for debugging
+				/*
+				 * System.out.println(rootVertex + " --> " + vertexToDependOn +
+				 * ". edge has been added");
+				 */
 			}
 		} else {
 			// if the root vertex and vertex to depend on don't exist create
 			// them and add an edge from the rootVertex to the vertexToDependOn
-			createVertexIfNotExists(rootVertex, vertexToDependOn);
+			createVertexAndEdges(rootVertex, vertexToDependOn);
 			// debug note
-			/*System.out.println(rootVertex + " ===> " + vertexToDependOn
-					+ ". This edge has been added"); */
+			/*
+			 * System.out.println(rootVertex + " ===> " + vertexToDependOn +
+			 * ". This edge has been added");
+			 */
 		}
 	}
 
 	/*
 	 * Method gets two vertices and adds both of them to allVertices, then adds
-	 * an edge from the newVertex to the vertexToDependOn them if the vertexToDependOn argument isn't passed as
-	 * null
+	 * an edge from the newVertex to the vertexToDependOn them if the
+	 * vertexToDependOn argument isn't passed as null
 	 */
 
-	private void createVertexIfNotExists(String newVertex,
-			String vertexToDependOn) {
+	private void createVertexAndEdges(String newVertex, String vertexToDependOn) {
 		// check if the newVertex exists
 		if (!allVertices.containsKey(newVertex)) {
 			// put in a newVertex key with an empty TreeSet obj
@@ -92,23 +105,24 @@ public class Graph {
 			if (vertexToDependOn != null) {
 				tempTree.add(vertexToDependOn);
 				// recursive call, adds vertexToDependOn to main list
-				createVertexIfNotExists(vertexToDependOn, null);
+				createVertexAndEdges(vertexToDependOn, null);
 			}
-			// place edge to the newVertex and the new created Tree Set (rootVertex)
+			// place edge to the newVertex and the new created Tree Set
+			// (rootVertex)
 			allVertices.put(newVertex, tempTree);
 		}
 	}
 
 	// Checks for an edge from rootVertex to vertexToDependOn
 	private boolean isEdge(String rootVertex, String vertexToDependOn) {
-		boolean result = false; 		
+		boolean result = false;
 
 		// get all vertices with the root vertex name
 		TreeSet<String> verticeSet = allVertices.get(rootVertex);
 
 		// check if the set contains the vertex to depend on as a key, if it
-		// does then
-		// there's an edge
+		// does then there's an edge
+
 		if (verticeSet.contains(vertexToDependOn))
 			result = true;
 
@@ -135,10 +149,10 @@ public class Graph {
 			// create a TreeSet for each vertex
 			TreeSet<String> verticeSet = (TreeSet<String>) vertexValuesIter
 					.next();
-			Iterator mainVerticesIter = verticeSet.iterator();
+			Iterator vertexesIter = verticeSet.iterator();
 			// for each key value add 1 to number of Edges
-			while (mainVerticesIter.hasNext()) {
-				mainVerticesIter.next();
+			while (vertexesIter.hasNext()) {
+				vertexesIter.next();
 				numOfEdges++;
 			}
 		}
@@ -156,44 +170,62 @@ public class Graph {
 		Set<String> keys = allVertices.keySet();
 		// iterate through keys
 		Iterator<String> allKeys = keys.iterator();
-		//
+		// retrives all vertex's from the iterator
 		Iterator<TreeSet<String>> allVertexValues = vertexValues.iterator();
-
+		// loop through all keys and print every edge found
 		while (allKeys.hasNext()) {
-			// covert keys to string then pass to set
+			// convert keys to string then pass to set
 			String keyName = allKeys.next().toString();
-			TreeSet<String> mainVertices = (TreeSet<String>) allVertexValues
-					.next();
+			// create set of vertexes for each iteration containing vertex
+			// names/values
+			TreeSet<String> vertexes = (TreeSet<String>) allVertexValues.next();
+			// checks if there's an edge to vertex1 (performs check to do print)
 			if (keyName.contains(vertex1)) {
-				Iterator<String> mainVerticesIter = mainVertices.iterator();
-				while (mainVerticesIter.hasNext()) {
-					String vertexToDependOn = mainVerticesIter.next()
-							.toString();
+				Iterator<String> vertexesIter = vertexes.iterator();
+				while (vertexesIter.hasNext()) {
+					String vertexToDependOn = vertexesIter.next().toString();
 					if (vertexToDependOn.contains(vertex2)) {
 						System.out.println("Found an edge from: " + keyName
 								+ "to" + "--> " + vertexToDependOn);
 					}
+					// if the edge from vertex1 to vertex2 depends on it'self?
+					if (vertexToDependOn.contains(vertex1)) {
+						System.out
+								.println("The edge from vertex1 to vertex2 depend on each other");
+					}
 				}
 			}
 		}
+		// worst case - no edge found to print
 		System.out.println("The edge from " + vertex1 + " to " + vertex2
 				+ " was not found");
 	}
 
 	// method prints a from vertex1 to vertex2 at a given length
 	public void printMatchingPath(String vertex1, String vertex2, int pathLength) {
+		// retrieves all vertices to iterate through
 		Iterator allVerticesIter = allVertices.entrySet().iterator();
-		ArrayList<String> pastVertices = new ArrayList();
+		// utilized an ArrayList for dynamic efficiency
+		ArrayList<String> previousVertexes = new ArrayList();
+		// loop through allVerticies to find matching paths
 		while (allVerticesIter.hasNext()) {
+			// create a collection view of map holding references of each vertex
 			Map.Entry pair = (Map.Entry) allVerticesIter.next();
 			String vertexName = pair.getKey().toString();
+			// check if each collection has edge from vertex1 to vertex
 			if (vertexName.contains(vertex1)) {
+				// get the length of the path
 				int pathCounter = 0;
+				// perform full depth search to get the path length after
+				// matching
 				String matchedPath = depthFirstPathSearch(vertexName, vertex2,
-						pathCounter, pathLength, pastVertices);
+						pathCounter, pathLength, previousVertexes);
 				if (matchedPath != "")
 					System.out.println(matchedPath);
 				else
+					// print lenth and matching path from vertex 1 to vertex 2
+					// note that matching path is first matching path, not full
+					// circles
 					System.out.print("The path of length " + pathLength
 							+ " from '" + vertex1 + "' and '" + vertex2
 							+ "' has not been found\n");
@@ -201,30 +233,45 @@ public class Graph {
 		}
 	}
 
-	private String depthFirstPathSearch(String currentVertex,
-			String searchVertex, int pathCounter, int pathLength,
-			ArrayList<String> pastVertices) {
+	// this private method recursively determines (divides into sub-problems)
+	// the depth from the current vertex
+	// to the desired or desiredVertex, utilizes paramter of length to determine
+	// path length
 
-		if (pastVertices.contains(currentVertex))
+	private String depthFirstPathSearch(String currentVertex,
+			String desiredVertex, int pathCounter, int pathLength,
+			ArrayList<String> previousVertexes) {
+
+		// if previousVertex contains the current vertex then end
+		if (previousVertexes.contains(currentVertex))
 			return "";
 
+		// check to see if path contains desired Vertex
 		if (pathCounter >= pathLength) {
-			if (currentVertex.contains(searchVertex)) {
+			if (currentVertex.contains(desiredVertex)) {
 				return currentVertex;
 			} else {
 				return "";
 			}
 		} else {
-			pastVertices.add(currentVertex);
+			// add current vertexes to previous path and move forward
+			previousVertexes.add(currentVertex);
 			pathCounter++;
 
-			TreeSet<String> mainVerteces = allVertices.get(currentVertex);
-			Iterator mainVertecesIter = mainVerteces.iterator();
+			// create set of current verticies holding current vertexes for
+			// current path
+			TreeSet<String> currentVertices = allVertices.get(currentVertex);
+			Iterator currentVerticesIter = currentVertices.iterator();
 
-			while (mainVertecesIter.hasNext()) {
-				String currentVertexLeaf = mainVertecesIter.next().toString();
+			// iterate through current path
+			while (currentVerticesIter.hasNext()) {
+				String currentVertexLeaf = currentVerticesIter.next()
+						.toString();
+				// recursively find desired path (divides into sub-problems/sub
+				// map)
 				String matchedPath = depthFirstPathSearch(currentVertexLeaf,
-						searchVertex, pathCounter, pathLength, pastVertices);
+						desiredVertex, pathCounter, pathLength,
+						previousVertexes);
 				if (matchedPath != "") {
 					String temp = currentVertex.concat(" ==> ");
 					return temp.concat(matchedPath);
