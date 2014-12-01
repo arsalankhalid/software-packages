@@ -184,10 +184,13 @@ public class Graph {
 				Iterator<String> vertexesIter = vertexes.iterator();
 				while (vertexesIter.hasNext()) {
 					String vertexToDependOn = vertexesIter.next().toString();
-					if (!vertexToDependOn.contains(vertex2)) {
+					if (vertexToDependOn.contains(vertex2)) {
 						System.out.println(keyName
 								+ "to" + "--> " + vertexToDependOn);
 					}
+					else // worst case - no edge found to print
+						System.out.println("The edge from " + vertex1 + " to " + vertex2
+						+ " was not found");
 					// if the edge from vertex1 to vertex2 depends on it'self?
 					if (vertexToDependOn.contains(vertex1)) {
 						// System.out
@@ -196,9 +199,6 @@ public class Graph {
 				}
 			}
 		}
-		// worst case - no edge found to print
-		System.out.println("The edge from " + vertex1 + " to " + vertex2
-				+ " was not found");
 	}
 
 	// method prints a from vertex1 to vertex2 at a given length
