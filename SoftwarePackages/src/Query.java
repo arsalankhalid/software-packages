@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Iterator;
 
 
 public class Query {
-	
+	/*
+	 * matches method
+	 * 
+	 */
 	public static ArrayList<String> matches(TreeSet<String> set, String string){
 		Iterator<String> iterator;
 		ArrayList<String> list = new ArrayList<String>();
@@ -121,20 +123,17 @@ public class Query {
 		System.out.print("\n");
 		
 		do {
-			
-			System.out.println("\n----------------------------- Menu -----------------------------");
+			System.out.println("\n--------------------------------- Menu --------------------------------");
 			System.out.println("Please type in your command: ");
-
 			System.out.println("-Type 'g pattern' to display all goals that match the pattern 'pattern'");
 			System.out.println("-Type 's dependencies' to display the number of dependencies between all packages");
 			System.out.println("  or 's dependents' to display the number of dependant packages");
 			System.out.println("-Type 'd pattern1 pattern2' to display all packages that match the pattern 'pattern1'"
 					+ "\n    and that are depended on a package that matches pattern 'pattern2'");
 			System.out.println("-Type 'p pattern1 pattern2 integer' to display a dependency path from a package that "
-					+ "\n    matches the pattern 'pattern1', to a package that matches pattern 'pattern2', with a length"
-					+ " integer");
+					+ "\n    matches the pattern 'pattern1', to a package that matches pattern 'pattern2', with a "
+					+ "\n length integer");
 			System.out.println("-Type 'q' to quit");
-
 
 			line = reader.nextLine();
 			choices = line.split(" ");

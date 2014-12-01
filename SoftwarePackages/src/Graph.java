@@ -7,10 +7,10 @@
  Graph class holds and manages multiple vertices and edges 
  The dependencies of vertices are directional, multi-directional however is not
  being used in this use case. 
- Please note that all vertices have been broken into seperate sets.
+ Please note that all vertices have been broken into separate sets.
  */
 
-//Data-Strucutres USED:
+//Data-Structures USED:
 /********************
  **	ArrayList
  **	TreeMap
@@ -164,6 +164,7 @@ public class Graph {
 	// note that only the first edge that is found is printed
 
 	public void printEdges(String vertex1, String vertex2) {
+		boolean check = false;
 		// create generic collection of vertexes and get their values
 		Collection<TreeSet<String>> vertexValues = allVertices.values();
 		// create set of distinct keys
@@ -187,22 +188,20 @@ public class Graph {
 					if (vertexToDependOn.contains(vertex2)) {
 						System.out.println(keyName
 								+ "to" + "--> " + vertexToDependOn);
-					}
-					else // worst case - no edge found to print
-						System.out.println("The edge from " + vertex1 + " to " + vertex2
-						+ " was not found");
-					// if the edge from vertex1 to vertex2 depends on it'self?
-					if (vertexToDependOn.contains(vertex1)) {
-						// System.out
-						//		.println("The edge from vertex1 to vertex2 depend on each other");
+						check = true;
 					}
 				}
 			}
+		}
+		if (!check){
+			System.out.println("The edge from " + vertex1 + " to " + vertex2
+				+ " was not found");
 		}
 	}
 
 	// method prints a from vertex1 to vertex2 at a given length
 	public void printMatchingPath(String vertex1, String vertex2, int pathLength) {
+		boolean check = false;
 		// retrieves all vertices to iterate through
 		Iterator allVerticesIter = allVertices.entrySet().iterator();
 		// utilized an ArrayList for dynamic efficiency
@@ -220,17 +219,21 @@ public class Graph {
 				// matching
 				String matchedPath = depthFirstPathSearch(vertexName, vertex2,
 						pathCounter, pathLength, previousVertexes);
-				if (matchedPath != "")
+				if (matchedPath != ""){
 					System.out.println(matchedPath);
-				else
-					// print lenth and matching path from vertex 1 to vertex 2
-					// note that matching path is first matching path, not full
-					// circles
-					System.out.print("The path of length " + pathLength
-							+ " from '" + vertex1 + "' and '" + vertex2
-							+ "' has not been found\n");
+					check = true;
+				}
 			}
 		}
+		
+		if(!check){
+			// print length and matching path from vertex 1 to vertex 2
+			// note that matching path is first matching path, not full
+			// circles
+			System.out.print("The path of length " + pathLength
+					+ " from '" + vertex1 + "' and '" + vertex2
+					+ "' has not been found\n");
+			}
 	}
 
 	// this private method recursively determines (divides into sub-problems)
@@ -273,7 +276,7 @@ public class Graph {
 						desiredVertex, pathCounter, pathLength,
 						previousVertexes);
 				if (matchedPath != "") {
-					String temp = currentVertex.concat(" ==> ");
+					String temp = currentVertex.concat("\n  ==>  ");
 					return temp.concat(matchedPath);
 				}
 			}
