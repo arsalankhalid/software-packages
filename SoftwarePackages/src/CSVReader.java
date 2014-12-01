@@ -5,15 +5,11 @@
  * Date: Nov 26, 2014
  */
 
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
  
@@ -34,8 +30,6 @@ public class CSVReader {
 		list.add(string[field]);
 	}
 
-	System.out.println("Done ArrayList");
-	
 	br.close();
 	
 	return list;
@@ -55,7 +49,6 @@ public class CSVReader {
 		String[] string = line.split(cvsSplitBy);
 		map.put(string[0], string[1]);
  	}
-	System.out.println("Done Map");
 
 	br.close();
 
@@ -71,13 +64,11 @@ public class CSVReader {
 	String line = "";
 	String cvsSplitBy = ",";
 	TreeMap<String,String> map = new TreeMap<String,String>();
-	TreeSet<String> set = new TreeSet<String>();
 	
 	while ((line = br.readLine()) != null) {
 		String[] string = line.split(cvsSplitBy);
  		map.put(string[0], string[1]);
  	}
-	System.out.println("Done MapSet");
 	
 	br.close();
 
@@ -98,7 +89,6 @@ public class CSVReader {
 		String[] string = line.split(cvsSplitBy);
 		set.add(string[index]);
 	}
-	System.out.println("Done TreeSet");
 
 	br.close();
 

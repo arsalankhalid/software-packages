@@ -5,11 +5,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
-
 public class Query {
 	  public static void main(String[] args) throws IOException{
+		Graph graph = new Graph();
 		
 		String goalsCSV = "http://england.proximity.on.ca/chris/outbound/lb/lb_goal.csv",
 				depCapCSV = "http://england.proximity.on.ca/chris/outbound/lb/lb_dep_cap.csv",
@@ -56,16 +54,7 @@ public class Query {
 		java.util.Iterator<String> iterator = keys.iterator();
 		
 		capabilityBinaries = reader.getMap(capBinCSV);
-		/*
-		int counter = 0 ;
-		while(iterator.hasNext()){
-			if (goals.contains(iterator.next())){
-				counter++;
-			}
-		}
-		*/
-		//System.out.println("Found Keys: " + counter);
-		
+
 		/*
 		 * AddEdges
 		 */
@@ -84,11 +73,9 @@ public class Query {
 					
 					for (Map.Entry<String,TreeSet<String>> entry : sourceBinaries.entrySet()) {
 						TreeSet<String> bins = entry.getValue();
-						//System.out.println(bins);
 						if (bins.contains(bin) ){//&& goals.contains(entry.getKey()) ){
-						   //addEdge(entry.getKey());
-							counter++;
-						   //System.out.println("Adding Edge between **" + goal + "** and ##" + entry.getKey() + "##");
+						   graph.addEdge(goal, entry.getKey());
+						   counter++;
 						}
 					}
 					
@@ -97,27 +84,16 @@ public class Query {
 		}
 		System.out.println("Total Edges added: " + counter);
 		
-		/*
-		 * Print loop for testing purposes
-		 *
-		for(int i=0; i<capabilities.size(); i++){
-			String item;
-			item = capabilities.get(i);
-			System.out.println(item);
-		}
-		*/
+		int edges, verts;
+		verts = graph.getNumberOfVertices();
+		edges = graph.getNumberOfEdges();
+		System.out.println("Number of Vertices: " + verts + "\nNumber of Edges: " + edges);
 		
-		/*
-		 * Iterate through a map for testing purposes
-		 *
-		for(Map.Entry<String,TreeSet<String>> entry : binarySources.entrySet()) {
-			  String key = entry.getKey();
-			  TreeSet<String> value = entry.getValue();
-
-			  System.out.println(key + " => " + value);
-		}
-		*/
+		graph.printEdges("dbus", "dbus");
 		
+		graph.printPath("devel", "devel", 4);
+		
+		System.out.println("Main Finished");
 		
 	  }
 }
