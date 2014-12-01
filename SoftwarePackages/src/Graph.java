@@ -184,10 +184,9 @@ public class Graph {
 				Iterator<String> vertexesIter = vertexes.iterator();
 				while (vertexesIter.hasNext()) {
 					String vertexToDependOn = vertexesIter.next().toString();
-					if (vertexToDependOn.contains(vertex2)) {
+					if (!vertexToDependOn.contains(vertex2)) {
 						System.out.println(keyName
 								+ "to" + "--> " + vertexToDependOn);
-						System.out.println("1");
 					}
 					// if the edge from vertex1 to vertex2 depends on it'self?
 					if (vertexToDependOn.contains(vertex1)) {
